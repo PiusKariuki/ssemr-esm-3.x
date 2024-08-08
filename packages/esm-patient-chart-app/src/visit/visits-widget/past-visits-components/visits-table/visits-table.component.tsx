@@ -38,7 +38,6 @@ import {
   userHasAccess,
 } from '@openmrs/esm-framework';
 import { EmptyState, PatientChartPagination, launchFormEntryOrHtmlForms } from '@openmrs/esm-patient-common-lib';
-import type { HtmlFormEntryForm } from '@openmrs/esm-patient-forms-app/src/config-schema';
 import { deleteEncounter } from './visits-table.resource';
 import { type MappedEncounter } from '../../visit.resource';
 import EncounterObservations from '../../encounter-observations';
@@ -65,11 +64,11 @@ const VisitTable: React.FC<VisitTableProps> = ({ showAllEncounters, visits, pati
   const desktopLayout = isDesktop(useLayoutType());
   const session = useSession();
 
-  const [htmlFormEntryFormsConfig, setHtmlFormEntryFormsConfig] = useState<Array<HtmlFormEntryForm> | undefined>();
+  const [htmlFormEntryFormsConfig, setHtmlFormEntryFormsConfig] = useState<Array<any> | undefined>();
 
   useEffect(() => {
     getConfig('@openmrs/esm-patient-forms-app').then((config) => {
-      setHtmlFormEntryFormsConfig(config.htmlFormEntryForms as HtmlFormEntryForm[]);
+      setHtmlFormEntryFormsConfig(config.htmlFormEntryForms as any[]);
     });
   });
 
