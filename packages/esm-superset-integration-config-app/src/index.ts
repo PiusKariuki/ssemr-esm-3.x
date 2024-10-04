@@ -2,10 +2,10 @@ import { getSyncLifecycle, defineConfigSchema } from '@openmrs/esm-framework';
 import { configSchema } from './config/config-schema';
 import { NavLink } from './components/superset-nav-icon.component';
 
-const moduleName = '@openmrs/esm-template-app';
+const moduleName = '@ssemr/esm-superset-integration-config-app';
 
 const options = {
-  featureName: 'root-world',
+  featureName: 'superset-integration-config-app',
   moduleName,
 };
 
