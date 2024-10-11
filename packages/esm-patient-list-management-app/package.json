@@ -1,6 +1,6 @@
 {
   "name": "@ssemr/esm-patient-list-management-app",
-  "version": "1.3.9",
+  "version": "1.4.0",
   "description": "Microfrontend for managing patient lists in O3",
   "browser": "dist/ssemr-esm-patient-list-management-app.js",
   "main": "src/index.ts",
