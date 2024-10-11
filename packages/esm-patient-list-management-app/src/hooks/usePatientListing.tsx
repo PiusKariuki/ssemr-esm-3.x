@@ -62,10 +62,6 @@ export const usePatientListing = (initialCategory="allClients") => {
 
   const defaultTableHeaders = [
     {
-      name: "SN",
-      selector: (row, index) => row.serialNumber,
-    },
-    {
       name: "Name",
       cell: (row) => (
         <Link
