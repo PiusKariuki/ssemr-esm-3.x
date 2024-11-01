@@ -9,17 +9,15 @@
   "scripts": {
     "start": "openmrs develop",
     "serve": "webpack serve --mode=development",
-    "build": "webpack --mode production",
+    "debug": "npm run serve",
+    "build": "webpack --mode production --color",
     "analyze": "webpack --mode=production --env analyze=true",
-    "lint": "eslint src --ext js,jsx,ts,tsx --max-warnings 0",
-    "prettier": "prettier --write \"src/**/*.{ts,tsx}\" --list-different",
-    "typescript": "tsc",
-    "test": "jest --config jest.config.js --passWithNoTests",
-    "verify": "turbo lint typescript coverage",
+    "lint": "cross-env TIMING=1 eslint src --ext tsx,ts --fix --max-warnings=0",
+    "test": "cross-env TZ=UTC jest --config jest.config.js --verbose false --passWithNoTests --color",
+    "test:watch": "cross-env TZ=UTC jest --watch --config jest.config.js --color",
     "coverage": "yarn test --coverage",
-    "prepare": "husky install",
-    "extract-translations": "i18next 'src/**/*.component.tsx' --config ./i18next-parser.config.js",
-    "test-e2e": "playwright test"
+    "typescript": "tsc",
+    "extract-translations": "i18next 'src/**/*.component.tsx' 'src/index.ts' --config ../../tools/i18next-parser.config.js"
   },
   "browserslist": [
     "extends browserslist-config-openmrs"
@@ -102,5 +100,5 @@
     "*.{css,scss,ts,tsx}": "prettier --write --list-different"
   },
   "packageManager": "yarn@4.2.2",
-  "gitHead": "3f1481e31018aeb677f682e2f8223c508479288d"
+  "gitHead": "9e215baa6a4482f2ca1285f737d2f2217457f25f"
 }
