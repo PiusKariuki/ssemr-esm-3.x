@@ -49,7 +49,6 @@ const ListsDashboard: React.FC = () => {
     setResetPaginationToggle,
     loading,
     filteredTableData,
-    currentPaginationState,
   } = usePatientListing();
 
   const SubHeaderComponentMemo = React.useMemo(() => {

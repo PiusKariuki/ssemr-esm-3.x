@@ -1,81 +1,108 @@
 import React, { createContext, useCallback, useEffect } from "react";
-import { useChartData } from "../hooks/useChartData";
+import { useART } from "../hooks/useART";
+import { chartRequestConfig } from "../helpers/chartRequestConfig";
 
 export const DashboardContext = createContext(null);
 
 const DashboardProvider = ({ children }) => {
   const {
     chartData,
-    setCurrentTimeFilter,
-    currentTimeFilter,
     time,
     setTime,
-    currentTopFilterIndex,
-    setCurrentTopFilterIndex,
-    filters,
-    setFilters,
-    getActiveClients,
-    getAllClients,
-    getNewlyEnrolledClients,
-    getClientsOnAppointment,
-    getMissedAppointments,
-    getInterruptedTreatment,
-    getReturnedToTreatment,
-    getDueForViralLoad,
-    getViralLoadResults,
-    getViralLoadSamples,
-    getHighViralLoad,
-    getAdultART,
-    getChildART,
+    categoryFilter,
+    getDashboardData,
+    setCategoryFilter,
     stats,
-    filterTabs,
-    getUnderCareOfCommunityProgram,
-    getViralLoadCoverage,
-    getViralLoadSuppression,
-    getHighViralLoadCascade,
-    setWaterFallDateRange,
     waterFallDateRange,
+    setWaterFallDateRange,
     viralLoadRange,
     setViralLoadRange,
-    getWaterFallData,
     defaultStatHeaders,
     txCURRHeaders,
-  } = useChartData();
+  } = useART();
 
   const memoizedGenericChartRequests = useCallback(async () => {
     try {
-      await getNewlyEnrolledClients();
-      await getActiveClients();
-      await getAdultART();
-      await getChildART();
-      await getUnderCareOfCommunityProgram();
+      getDashboardData({
+        ...chartRequestConfig.adultART,
+        url: chartRequestConfig.adultART.url({
+          time,
+        }),
+      });
+
+      getDashboardData({
+        ...chartRequestConfig.childART,
+        url: chartRequestConfig.childART.url({
+          time,
+        }),
+      });
+
+      getDashboardData({
+        ...chartRequestConfig.underCareOfCommunityProgram,
+        url: chartRequestConfig.underCareOfCommunityProgram.url({
+          time,
+        }),
+      });
     } catch (e) {
       return e;
     }
-  }, [currentTimeFilter, time]);
+  }, [time, categoryFilter]);
 
   const memoizedVLChartRequests = useCallback(async () => {
     try {
-      await getViralLoadSamples();
-      await getViralLoadResults();
-      await getViralLoadCoverage();
-      await getViralLoadSuppression();
+      getDashboardData({
+        ...chartRequestConfig.viralLoadSamples,
+        url: chartRequestConfig.viralLoadSamples.url({
+          time,
+        }),
+      });
+
+      getDashboardData({
+        ...chartRequestConfig.viralLoadResults,
+        url: chartRequestConfig.viralLoadResults.url({
+          time,
+        }),
+      });
+
+      getDashboardData({
+        ...chartRequestConfig.viralLoadCoverage,
+        url: chartRequestConfig.viralLoadCoverage.url({
+          time,
+        }),
+      });
+
+      getDashboardData({
+        ...chartRequestConfig.viralLoadSuppression,
+        url: chartRequestConfig.viralLoadSuppression.url({
+          time,
+        }),
+      });
     } catch (e) {
       return e;
     }
-  }, [currentTimeFilter, time]);
+  }, [time, categoryFilter]);
 
-  const memoizedHVLCascade = useCallback(async () => {
+  const memoizedHVLCascade = useCallback(() => {
     try {
-      await getHighViralLoadCascade();
+      getDashboardData({
+        ...chartRequestConfig.highViralLoadCascade,
+        url: chartRequestConfig.highViralLoadCascade.url({
+          time: viralLoadRange,
+        }),
+      });
     } catch (e) {
       return e;
     }
   }, [viralLoadRange]);
 
-  const memoizedWaterFallData = useCallback(async () => {
+  const memoizedWaterFallData = useCallback(() => {
     try {
-      await getWaterFallData();
+      getDashboardData({
+        ...chartRequestConfig.waterfall,
+        url: chartRequestConfig.waterfall.url({
+          time: waterFallDateRange,
+        }),
+      });
     } catch (e) {
       return e;
     }
@@ -83,34 +110,86 @@ const DashboardProvider = ({ children }) => {
 
   const memoizedInitialBatchOfData = useCallback(async () => {
     try {
-      await getAllClients();
-      await getClientsOnAppointment();
-      await getMissedAppointments();
-      await getInterruptedTreatment();
-      await getReturnedToTreatment();
-      //since it's used in stat card
-      await getDueForViralLoad();
-      await getHighViralLoad();
+      getDashboardData({
+        ...chartRequestConfig.newlyEnrolledClients,
+        url: chartRequestConfig.newlyEnrolledClients.url({
+          time,
+          categoryFilter,
+        }),
+      });
+
+      getDashboardData({
+        ...chartRequestConfig.activeClients,
+        url: chartRequestConfig.activeClients.url({
+          time,
+          categoryFilter,
+        }),
+      });
+
+      getDashboardData({
+        ...chartRequestConfig.allClients,
+        url: chartRequestConfig.allClients.url({
+          time,
+        }),
+      });
+      getDashboardData({
+        ...chartRequestConfig.onAppointment,
+        url: chartRequestConfig.onAppointment.url({
+          time,
+          categoryFilter,
+        }),
+      });
+
+      getDashboardData({
+        ...chartRequestConfig.missedAppointment,
+        url: chartRequestConfig.missedAppointment.url({
+          time,
+          categoryFilter,
+        }),
+      });
+      getDashboardData({
+        ...chartRequestConfig.interrupted,
+        url: chartRequestConfig.interrupted.url({
+          time,
+          categoryFilter,
+        }),
+      });
+      getDashboardData({
+        ...chartRequestConfig.returned,
+        url: chartRequestConfig.returned.url({
+          time,
+          categoryFilter,
+        }),
+      });
+      getDashboardData({
+        ...chartRequestConfig.dueForViralLoad,
+        url: chartRequestConfig.dueForViralLoad.url({
+          time,
+          categoryFilter,
+        }),
+      });
+      getDashboardData({
+        ...chartRequestConfig.highViralLoad,
+        url: chartRequestConfig.highViralLoad.url({
+          time,
+          categoryFilter,
+        }),
+      });
     } catch (e) {
       return e;
     }
-  }, [currentTimeFilter, time]);
+  }, [time, categoryFilter]);
 
   useEffect(() => {
     memoizedInitialBatchOfData();
-  }, [currentTimeFilter, time]);
+  }, [time, categoryFilter]);
 
   return (
     <DashboardContext.Provider
       value={{
-        currentTimeFilter,
-        currentTopFilterIndex,
-        filterTabs,
-        filters,
         chartData,
-        setCurrentTimeFilter,
-        setCurrentTopFilterIndex,
-        setFilters,
+        setCategoryFilter,
+        categoryFilter,
         stats,
         time,
         setTime,
@@ -118,23 +197,6 @@ const DashboardProvider = ({ children }) => {
         setViralLoadRange,
         defaultStatHeaders,
         txCURRHeaders,
-        //   http requests
-        getNewlyEnrolledClients,
-        getActiveClients,
-        getAdultART,
-        getChildART,
-        getAllClients,
-        getUnderCareOfCommunityProgram,
-        getDueForViralLoad,
-        getViralLoadSamples,
-        getViralLoadResults,
-        getViralLoadCoverage,
-        getViralLoadSuppression,
-        getHighViralLoad,
-        getClientsOnAppointment,
-        getMissedAppointments,
-        getReturnedToTreatment,
-        getInterruptedTreatment,
         memoizedGenericChartRequests,
         memoizedVLChartRequests,
         viralLoadRange,

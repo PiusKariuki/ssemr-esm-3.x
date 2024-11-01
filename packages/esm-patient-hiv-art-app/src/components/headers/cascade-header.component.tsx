@@ -40,7 +40,7 @@ const Header = ({ data, isModalOpen, setIsModalOpen, headers, rows }) => {
     <div className={styles.cascadeHeader}>
       <svg
         onClick={() => setIsModalOpen((prev) => !prev)}
-        style={{ width: 16, fill: "#161616" }}
+        style={{ width: 16, height: 16, fill: "#161616" }}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 512 512"
       >

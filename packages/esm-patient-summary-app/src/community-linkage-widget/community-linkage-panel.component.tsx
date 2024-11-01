@@ -1,7 +1,6 @@
-import React, { useMemo, useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import styles from "./community-linkage-panel.scss";
-import ProgramSummary from "../program-summary/program-summary.component";
 import { CardHeader } from "@openmrs/esm-patient-common-lib";
 import CommunityLinkage from "../community-programme/community-linkage.component";
 
@@ -19,10 +18,7 @@ const CommunityLinkagePanel: React.FC<CommunityLinkagePanelProps> = ({
     <>
       <div className={styles.widgetCard}>
         <CardHeader
-          title={t(
-            "linkageToCommunityWorker",
-            "Linkage to Community Worker"
-          )}
+          title={t("linkageToCommunityWorker", "Linkage to Community Worker")}
           children={""}
         ></CardHeader>
         <div style={{ width: "100%", minHeight: "5rem" }}>

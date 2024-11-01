@@ -8,7 +8,7 @@ const ChartSelectorTabsComponent = () => {
 
   const tabs = [
     {
-      name: "Generic Charts",
+      name: "Treatment Charts",
       path: "/",
     },
     {

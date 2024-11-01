@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import styles from "./vl-panel.scss";
 import { CardHeader } from "@openmrs/esm-patient-common-lib";

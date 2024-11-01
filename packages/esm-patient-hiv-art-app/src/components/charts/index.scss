@@ -1,6 +1,5 @@
 @use '@carbon/styles/scss/spacing';
 @use '@carbon/colors/index';
-//@use '@carbon/styles/scss/type/index';
 @import "../../root";
 
 .container {
@@ -131,27 +130,29 @@
   height: 100%;
 }
 
-.cascadeTitle {
-  font-size: 16px;
-  font-weight: 600;
-  width: 100%;
+.cascadeFilterAndHeaderContainer{
+  display: flex;
+  gap: 4rem;
+  align-items: end;
 }
 
 .cascadeHeaderContainer {
   display: flex;
   width: 100%;
+  align-items: center;
   justify-content: space-between;
-  gap: 4rem;
-}
-
-.cascadeContentWrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 1rem;
 }
 
 .SVGWrapper {
+  width: 100%;
+}
+
+.cascadeSVG{
+  margin-top: 2rem;
   width: 100%;
 }
 

@@ -3,11 +3,10 @@ import { Home } from "@carbon/react/icons";
 import styles from "./home-dashboard.scss";
 import { useTranslation } from "react-i18next";
 import StatCardComponent from "../components/cards/stat-card.component";
-import "@carbon/charts/styles.css";
-import SSEMRTab from "../components/tabs/SSEMRTab";
+import CategoryTabs from "../components/tabs/CategoryTabs";
 import { DashboardContext } from "../context/DashboardContext";
 import { TimeFilter } from "../components/filter/TimeFilter";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import GenericChartsComponent from "../components/chart-sections/generic-charts.component";
 import ChartSelectorTabsComponent from "../components/tabs/chart-selector-tabs.component";
 import ViralLoadChartsComponent from "../components/chart-sections/viral-load-charts.component";
@@ -16,8 +15,15 @@ import ComplexCharts from "../components/chart-sections/complex-charts.component
 const HomeDashboard = () => {
   const { t } = useTranslation();
 
-  const { stats, filterTabs, currentTopFilterIndex } =
+  const { stats, setTime } =
     useContext(DashboardContext);
+
+  const timeFilterSubmitHandler = (start: string, end: string) => {
+    setTime({
+      startDate: start,
+      endDate: end,
+    });
+  };
 
   return (
     <div className={styles.container}>
@@ -37,29 +43,18 @@ const HomeDashboard = () => {
             maxWidth: "500px",
           }}
         >
-          <TimeFilter />
+          <TimeFilter submitHandler={timeFilterSubmitHandler} />
         </div>
       </div>
       <div className={styles.artBody}>
         {/* ..................Tabs................. */}
-        <div className={styles.tabs}>
-          {filterTabs.map((item) => (
-            <SSEMRTab
-              index={item.index}
-              name={item.title}
-              key={item.title}
-              handler={item.filterFunction}
-              isActive={currentTopFilterIndex == item.index}
-            />
-          ))}
-        </div>
+        <CategoryTabs />
 
         {/* ...................Stats.................... */}
         <div className={styles.stats}>
-          {stats.map(
-            (stat) =>
-              stat.results && <StatCardComponent item={stat} key={stat.title} />
-          )}
+          {stats.map((stat) => (
+            <StatCardComponent item={stat} key={stat.title} />
+          ))}
         </div>
         <ChartSelectorTabsComponent />
         <Routes>

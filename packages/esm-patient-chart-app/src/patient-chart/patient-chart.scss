@@ -3,7 +3,7 @@
 
 $actionNavOffset: 45px;
 $actionPanelOffset: 256px;
-$actionPanelExpandedOffset: $actionNavOffset+$actionPanelOffset;
+$actionPanelExpandedOffset: $actionNavOffset + $actionPanelOffset;
 
 .grid {
   display: grid;
@@ -36,13 +36,11 @@ $actionPanelExpandedOffset: $actionNavOffset+$actionPanelOffset;
   display: flex;
   align-items: flex-start;
   flex-direction: column;
-  padding-right: spacing.$spacing-01;
 }
 
 :global(.omrs-breakpoint-gt-small-desktop) .chartContainer {
   margin-left: var(--omrs-sidenav-width);
 }
-
 
 .innerChartContainer {
   display: flex;
@@ -53,7 +51,6 @@ $actionPanelExpandedOffset: $actionNavOffset+$actionPanelOffset;
 .closeWorkspace {
   padding-right: 0;
 }
-
 
 // Overriding styles for RTL support
 html[dir='rtl'] {

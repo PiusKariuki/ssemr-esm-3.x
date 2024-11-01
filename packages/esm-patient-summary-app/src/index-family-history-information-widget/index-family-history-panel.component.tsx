@@ -1,7 +1,5 @@
-import React, { useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
+import React from "react";
 import styles from "./more-info-panel.scss";
-// import ClientInfo from "../family-history-information/more-client-info.component";
 import IndexFamilyInfo from "../index-family-history-information/index-family-info.component";
 
 interface MoreClientInfoPanelProps {
@@ -12,8 +10,6 @@ interface MoreClientInfoPanelProps {
 const ClientFamilyInfoPanel: React.FC<MoreClientInfoPanelProps> = ({
   patientUuid,
 }) => {
-  const { t } = useTranslation();
-
   return (
     <>
       <div className={styles.widgetCard}>

@@ -19,22 +19,43 @@ export const getStartAndEndDateOfWeek = (week) => {
   return { startDate: endDateFormatted, endDate: startDateFormatted };
 };
 
-export const getMonthStartAndLastDate = (value) => {
-  const [year, month] = value.split("-");
+export const getThisMonthsFirstAndLast = (inputDate = null) => {
+  const currentDate = new Date();
 
-  const firstDate = new Date(year, month - 1, 1);
+  if (inputDate) {
+    currentDate.setMonth(inputDate.split("-")[1] - 1);
+    currentDate.setFullYear(inputDate.split("-")[0]);
+  }
 
-  const lastDate = new Date(year, month, 0);
+  // Get the first date of the month
+  const firstDate = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth(),
+    1
+  );
 
-  const firstDateFormatted = firstDate.toISOString().split("T")[0];
-  const lastDateFormatted = lastDate.toISOString().split("T")[0];
+  // Get the last date of the month
+  const lastDate = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth() + 1,
+    0
+  );
 
-  return { startDate: firstDateFormatted, endDate: lastDateFormatted };
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+  return { startDate: formatDate(firstDate), endDate: formatDate(lastDate) };
 };
 
-export const getThisYearsFirstAndLastDate = (year) => {
-  const firstDayOfYear = new Date(year, 0, 1);
-  const lastDayOfYear = new Date(year, 11, 31);
+export const getThisYearsFirstAndLastDate = (
+  year = new Date().getFullYear()
+) => {
+  const firstDayOfYear = new Date(Date.UTC(year, 0, 1));
+  const lastDayOfYear = new Date(Date.UTC(year, 11, 31));
 
   // Format the dates as 'YYYY-MM-DD'
   const firstDayFormatted = firstDayOfYear.toISOString().split("T")[0];
@@ -59,7 +80,7 @@ export const getThisQuartersRange = () => {
       break;
     case month <= 9:
       start = `${new Date().getFullYear()}-07-01`;
-      end = `${new Date().getFullYear()}-09-01`;
+      end = `${new Date().getFullYear()}-09-30`;
       break;
     default:
       start = `${new Date().getFullYear()}-10-01`;
@@ -67,4 +88,10 @@ export const getThisQuartersRange = () => {
   }
 
   return { start, end };
+};
+
+export const parseDate = (dateStr: string) => {
+  if (!dateStr) return null;
+  const [day, month, year] = dateStr.split("-");
+  return new Date(`${year}-${month}-${day}`);
 };

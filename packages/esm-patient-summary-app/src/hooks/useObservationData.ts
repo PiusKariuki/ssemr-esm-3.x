@@ -16,10 +16,8 @@ const useObservationData = (patientUuid) => {
           throw new Error("Failed to fetch data");
         }
         const jsonData = await response.json();
-        console.log(jsonData);
         setData(jsonData);
       } catch (error) {
-        console.error("Error fetching observation data:", error);
         setError(error.message);
       }
       setIsLoading(false);
@@ -28,18 +26,68 @@ const useObservationData = (patientUuid) => {
     fetchData();
   }, [patientUuid]);
 
-  // const extractObservationData = (data, keyword) => {
-  //   if (data && data.results) {
-  //     const observation = data.results.find((entry) =>
-  //       entry.results
-  //     );
-  //     return observation ? observation : "---";
-  //   } else {
-  //     return "No observation Found";
-  //   }
-  // };
+  const defaultFamilyTableHeaders = [
+    {
+      name: "Name",
+      selector: (row) => row.name || "---",
+    },
+    {
+      name: "Age",
+      selector: (row) => row.age || "---",
+    },
+    {
+      name: "Sex",
+      selector: (row) => row.sex || "---",
+    },
+    {
+      name: "HIV Status",
+      selector: (row) => row.hivStatus || "---",
+    },
+    {
+      name: "Unique ART No.",
+      selector: (row) => row.artNumber || "---",
+    },
+  ];
 
-  return { data, isLoading, setIsLoading, error };
+  const defaultIndexTableHeaders = [
+    {
+      name: "Name",
+      selector: (row) => row.name || "---",
+    },
+    {
+      name: "Age",
+      selector: (row) => row.age || "---",
+    },
+    {
+      name: "Sex",
+      selector: (row) => row.sex || "---",
+    },
+    {
+      name: "Relationship",
+      selector: (row) => row.relationship || "---",
+    },
+    {
+      name: "HIV Status",
+      selector: (row) => row.hivStatus || "---",
+    },
+    {
+      name: "Phone No.",
+      selector: (row) => row.phone || "---",
+    },
+    {
+      name: "Unique ART No.",
+      selector: (row) => row.uniqueArtNumber || "---",
+    },
+  ];
+
+  return {
+    data,
+    isLoading,
+    setIsLoading,
+    error,
+    defaultFamilyTableHeaders,
+    defaultIndexTableHeaders,
+  };
 };
 
 export default useObservationData;

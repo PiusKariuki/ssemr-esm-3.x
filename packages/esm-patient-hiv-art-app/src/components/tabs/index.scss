@@ -3,6 +3,13 @@
 @use '@carbon/styles/scss/type';
 @import "../../root.scss";
 
+.tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  justify-content: space-between;
+  gap: 2rem;
+}
 
 .tab{
   padding: .5rem 1rem;

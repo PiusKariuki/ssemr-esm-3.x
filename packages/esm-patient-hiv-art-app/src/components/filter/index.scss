@@ -3,14 +3,13 @@
 @use '@carbon/styles/scss/type';
 @import "../../root.scss";
 
+
 .parent{
-  width: 100%;
   display: flex;
   flex-direction: row;
   gap: 8px;
   background: white;
-  align-items: center;
-  margin-top: 20px;
+  align-items: end;
 }
 
 .inputWrapper{
@@ -27,6 +26,7 @@
 
 label{
   font-size: 11px;
+  line-height: 0px;
 }
 
 input{

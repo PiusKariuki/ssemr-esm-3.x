@@ -53,7 +53,7 @@ const QuarterPickerComponent = ({ changeCallback }) => {
         { value: year, label: year.toString() },
       ]);
     }
-    updateDateRange(new Date().getFullYear(), "1");
+    updateDateRange(currentYear, getCurrentQuarter().value.toString());
   }, []);
 
   const handleYearChange = (e) => {
@@ -94,12 +94,7 @@ const QuarterPickerComponent = ({ changeCallback }) => {
 
   return (
     <div className={styles.quarterPickerParent}>
-      <select
-        onChange={handleYearChange}
-        value={quarter}
-        name="Year"
-        id="year"
-      >
+      <select onChange={handleYearChange} value={quarter} name="Year" id="year">
         {yearOptions.map((option, index) => (
           <option key={index} {...option}>
             {option.label}

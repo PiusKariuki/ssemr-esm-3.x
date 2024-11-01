@@ -1,131 +1,54 @@
-import React, { useContext, useEffect, useState } from "react";
-import { RadioButton, RadioButtonGroup, Select } from "@carbon/react";
+import React, { useState } from "react";
+import { DatePicker, DatePickerInput, Button } from "@carbon/react";
 import styles from "./index.scss";
-import { DashboardContext } from "../../context/DashboardContext";
-import {
-  getMonthStartAndLastDate,
-  getStartAndEndDateOfWeek,
-  getThisYearsFirstAndLastDate,
-} from "../../helpers/dateOps";
 
-export const TimeFilter = () => {
-  const [yearOptions, setYearOptions] = useState([]);
-  const [timeFilter, setTimeFilter] = useState("groupYear");
-  const [selectedYear, setSelectedYear] = useState("");
-  const [month, setMonth] = useState("");
-  const [week, setWeek] = useState("");
-  const { setCurrentTimeFilter, setTime } = useContext(DashboardContext);
+interface Props {
+  submitHandler(startDate: string, endDate: string): void;
+}
 
-  const filterChangeHandler = (value) => {
-    if (value === "groupYear")
-      setTime(getThisYearsFirstAndLastDate(new Date().getFullYear()));
-    else if (value === "groupMonth")
-      setTime(getMonthStartAndLastDate(`${new Date().getFullYear()}-01`));
-    else setTime(getStartAndEndDateOfWeek(`${new Date().getFullYear()}-W01`));
+export const TimeFilter: React.FC<Props> = ({ submitHandler }) => {
 
-    setTimeFilter(value);
+  const [dateRangeValue, setDateRangeValue] = useState([
+    new Date(new Date().getFullYear(), 0, 1),
+    new Date(new Date().getFullYear(), 11, 31),
+  ]);
+
+  const changeHandler = (range: Date[]) => {
+    setDateRangeValue(range);
   };
 
-  const weekChangeHandler = (value) => {
-    setWeek(value);
-    setTime(getStartAndEndDateOfWeek(value));
+  const adjustToOffset = (date: Date) => {
+    const offset = date.getTimezoneOffset() * 60000;
+    return new Date(date.getTime() - offset);
   };
 
-  const monthChangeHandler = (value) => {
-    setMonth(value);
-    setTime(getMonthStartAndLastDate(value));
+  const handleSubmit = () => {
+    if (dateRangeValue[0] && dateRangeValue[1])
+      submitHandler(
+        adjustToOffset(dateRangeValue[0]).toISOString().split("T")[0],
+        adjustToOffset(dateRangeValue[1]).toISOString().split("T")[0]
+      );
   };
-
-  const yearChangeHandler = (value) => {
-    setSelectedYear(value);
-    setTime(getThisYearsFirstAndLastDate(value));
-  };
-
-  useEffect(() => {
-    setCurrentTimeFilter(timeFilter);
-  }, [timeFilter]);
-
-  useEffect(() => {
-    setMonth(`${selectedYear}-01`);
-    setWeek(`${selectedYear}-W01`);
-  }, [selectedYear]);
-
-  useEffect(() => {
-    const currentYear = new Date().getFullYear();
-
-    const yearOptions = [];
-
-    for (let year = currentYear; year >= currentYear - 19; year--) {
-      setYearOptions((prev) => [
-        ...prev,
-        { value: year, label: year.toString() },
-      ]);
-
-      yearOptions.push({ value: year, label: year.toString() });
-    }
-  }, []);
 
   return (
     <div className={styles.parent}>
-      <RadioButtonGroup
-        legendText="Group data by"
-        name="group-year"
-        defaultSelected={timeFilter}
-        orientation="horizontal"
-        value={timeFilter}
-        onChange={(value: React.SetStateAction<string>) =>
-          filterChangeHandler(value)
-        }
+      <DatePicker
+        value={dateRangeValue}
+        onChange={changeHandler}
+        datePickerType="range"
       >
-        <RadioButton
-          labelText="Year"
-          value="groupYear"
-          id="year"
-          checked={timeFilter === "groupYear"}
+        <DatePickerInput
+          id="date-picker-input-id-start"
+          placeholder="mm/dd/yyyy"
+          labelText="Start date"
         />
-        <RadioButton labelText="Month" value="groupMonth" id="month" />
-        <RadioButton labelText="Week" value="groupWeek" id="week" />
-      </RadioButtonGroup>
-
-      <div className={styles.inputWrapper}>
-        {timeFilter === "groupYear" ? (
-          <Select
-            id="yearPicker"
-            labelText="Year"
-            value={selectedYear}
-            onChange={(evt) => yearChangeHandler(evt.target.value)}
-            defaultValue={yearOptions[0]}
-          >
-            {yearOptions.map((option, index) => (
-              <option key={index} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </Select>
-        ) : timeFilter === "groupMonth" ? (
-          <div className={styles.formGroup}>
-            <label htmlFor="month">Month</label>
-            <input
-              id="month"
-              className={styles.timeInputs}
-              value={month}
-              type="month"
-              onChange={(evt) => monthChangeHandler(evt.target.value)}
-            />
-          </div>
-        ) : (
-          <div className={styles.formGroup}>
-            <label htmlFor="week">Week</label>
-            <input
-              id="week"
-              className={styles.timeInputs}
-              value={week}
-              type="week"
-              onChange={(evt) => weekChangeHandler(evt.target.value)}
-            />
-          </div>
-        )}
-      </div>
+        <DatePickerInput
+          id="date-picker-input-id-finish"
+          placeholder="mm/dd/yyyy"
+          labelText="End date"
+        />
+      </DatePicker>
+      <Button onClick={handleSubmit}>Submit</Button>
     </div>
   );
 };

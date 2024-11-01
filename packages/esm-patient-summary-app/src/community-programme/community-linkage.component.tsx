@@ -1,23 +1,17 @@
 import React from "react";
 import styles from "./community-linkage.scss";
 import { useTranslation } from "react-i18next";
-import { useLayoutType } from "@openmrs/esm-framework";
-import { StructuredListSkeleton, Tile } from "@carbon/react";
 import useObservationData from "../hooks/useObservationData";
+import { StructuredListSkeleton, Tile } from "@carbon/react";
 
 export interface CommunityLinkageProps {
   patientUuid: string;
   code: string;
 }
-const CommunityLinkage: React.FC<CommunityLinkageProps> = ({
-  patientUuid,
-}) => {
-  const { data, isLoading, error } = useObservationData(
-    patientUuid,
-  );
+const CommunityLinkage: React.FC<CommunityLinkageProps> = ({ patientUuid }) => {
+  const { data, isLoading, error } = useObservationData(patientUuid);
   const { t } = useTranslation();
 
-  const isTablet = useLayoutType() == "tablet";
   if (isLoading) {
     return (
       <Tile>
@@ -39,33 +33,33 @@ const CommunityLinkage: React.FC<CommunityLinkageProps> = ({
   return (
     <>
       <div className={styles.card}>
-        <div className={styles.container}>
-          <div className={styles.content}>
-            <p style={{ marginRight: "15px" }}>
-              {t("nameOfCHW", "Name of the Community Health Worker (CHW)")}
-            </p>
-            <p>{(data.results[0]?.chwName)}</p>
+        {data.results && (
+          <div className={styles.container}>
+            <div className={styles.content}>
+              <p style={{ marginRight: "15px" }}>
+                {t("nameOfCHW", "Name of the Community Health Worker (CHW)")}
+              </p>
+              <p>{data?.results[0]?.chwName}</p>
+            </div>
+            <div className={styles.content}>
+              <p>{t("telephoneNumber", "Telephone Number")}</p>
+              <p className={styles.value}>{data?.results[0]?.chwPhone}</p>
+            </div>
+            <div className={styles.content}>
+              <p>
+                {t(
+                  "chwAddress",
+                  "LandMark/Address Of Community Health Worker (CHW)"
+                )}
+              </p>
+              <p>
+                <span className={styles.value}>
+                  {data?.results[0].chwAddress}
+                </span>
+              </p>
+            </div>
           </div>
-          <div className={styles.content}>
-            <p>{t("telephoneNumber", "Telephone Number")}</p>
-            <p className={styles.value}>
-              {(data.results[0]?.chwPhone)}
-            </p>
-          </div>
-          <div className={styles.content}>
-            <p>
-              {t(
-                "chwAddress",
-                "LandMark/Address Of Community Health Worker (CHW)"
-              )}
-            </p>
-            <p>
-              <span className={styles.value}>
-                {(data.results[0].chwAddress)}
-              </span>
-            </p>
-          </div>
-        </div>
+        )}
       </div>
     </>
   );

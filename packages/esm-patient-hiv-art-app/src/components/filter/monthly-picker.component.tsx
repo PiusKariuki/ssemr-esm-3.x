@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./index.scss";
-import { getMonthStartAndLastDate } from "../../helpers/dateOps";
+import { getThisMonthsFirstAndLast } from "../../helpers/dateOps";
 
 const MonthlyPickerComponent = ({ changeCallback }) => {
   const [month, setMonth] = useState(
@@ -12,7 +12,7 @@ const MonthlyPickerComponent = ({ changeCallback }) => {
   );
 
   const monthChangeHandler = (value) => {
-    const range = getMonthStartAndLastDate(value);
+    const range = getThisMonthsFirstAndLast(value);
     changeCallback({ start: range.startDate, end: range.endDate });
     setMonth(value);
   };

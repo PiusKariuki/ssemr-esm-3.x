@@ -9,10 +9,10 @@ export interface IndexFamilyInfoProps {
   patientUuid: string;
   code: string;
 }
-const IndexFamilyInfo: React.FC<IndexFamilyInfoProps> = ({ patientUuid, code }) => {
-  const { data, isLoading, error } = useObservationData(
-    patientUuid,
-  );
+const IndexFamilyInfo: React.FC<IndexFamilyInfoProps> = ({
+  patientUuid,
+}) => {
+  const { data, error } = useObservationData(patientUuid);
   const { t } = useTranslation();
 
   if (error) {

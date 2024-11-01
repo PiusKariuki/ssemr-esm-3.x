@@ -182,7 +182,7 @@ const StatCardComponent: React.FC<StatCardProps> = ({ item }) => {
         {item.loading ? (
           <Loading small className={styles.spinner} withOverlay={false} />
         ) : (
-          <p className="">{item.stat}</p>
+          <p className="">{item.stat || 0}</p>
         )}
       </div>
     </div>

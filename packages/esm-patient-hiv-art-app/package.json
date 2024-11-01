@@ -1,6 +1,6 @@
 {
   "name": "@ssemr/esm-patient-hiv-art-app",
-  "version": "6.1.8",
+  "version": "6.2.9",
   "license": "MPL-2.0",
   "description": "Patient dashboard microfrontend for the OpenMRS SPA",
   "browser": "dist/ssemr-esm-patient-hiv-art-app.js",
@@ -37,8 +37,6 @@
     "url": "https://github.com/IntelliSOFT-Consulting/ssemr-esm-3.x/tree/main/packages/esm-patient-hiv-art-app/issues"
   },
   "dependencies": {
-    "@carbon/charts-react": "^1.5.2",
-    "@carbon/pictograms-react": "^11.56.1",
     "d3": "^7.9.0",
     "lodash-es": "^4.17.21",
     "uuid": "^8.3.2"
@@ -59,7 +57,9 @@
   "devDependencies": {
     "@types/uuid": "^9.0.4",
     "cross-env": "^7.0.3",
+    "css-loader": "^7.1.2",
+    "style-loader": "^4.0.0",
     "webpack": "^5.88.2"
   },
-  "gitHead": "9bc97b6ca9011a62042aac9cb7cf4352e186f19f"
+  "gitHead": "445fe425661b2e9502e0656c89cf8bbfd3dbe23e"
 }

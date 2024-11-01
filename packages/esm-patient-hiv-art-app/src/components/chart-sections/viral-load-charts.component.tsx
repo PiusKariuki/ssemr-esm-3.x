@@ -1,22 +1,22 @@
 import React, { useContext, useEffect } from "react";
-import { useARTCharts } from "../../hooks/useARTCharts";
+import { useCharts } from "../../hooks/useCharts";
 import HivArtChartsLayoutComponent from "../../layouts/hiv-art-charts-layout.component";
 import { DashboardContext } from "../../context/DashboardContext";
 
 const ViralLoadChartsComponent = () => {
-  const { viralLoadChartsConfig } = useARTCharts();
+  const { viralLoadChartsConfig } = useCharts();
 
   const {
     time,
-    currentTimeFilter,
     memoizedVLChartRequests,
     viralLoadRange,
     memoizedHVLCascade,
+    categoryFilter,
   } = useContext(DashboardContext);
 
   useEffect(() => {
     memoizedVLChartRequests();
-  }, [currentTimeFilter, time]);
+  }, [categoryFilter, time]);
 
   useEffect(() => {
     memoizedHVLCascade();
