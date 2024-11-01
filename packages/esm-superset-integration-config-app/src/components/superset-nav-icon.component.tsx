@@ -2,7 +2,8 @@ import React from 'react';
 
 export const NavLink = () => {
   return (
-    <a href={`http://${window.location.hostname}:8088`} target="_blank" rel="noopener noreferrer">Reporting & Analytics
+    <a href={`${window.location.protocol}//${window.location.hostname}:8088`} target="_blank" rel="noopener noreferrer">
+      Reporting & Analytics
       <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
            width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"
            className="-esm-primary-navigation__app-menu-panel__launchIcon___wn5Qn">
