@@ -1,6 +1,6 @@
 {
   "name": "@ssemr/esm-superset-integration-config-app",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MPL-2.0",
   "description": "An OpenMRS integration ESM for superset",
   "browser": "dist/esm-superset-integration-config-app.js",
