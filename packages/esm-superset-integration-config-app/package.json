@@ -100,5 +100,5 @@
     "*.{css,scss,ts,tsx}": "prettier --write --list-different"
   },
   "packageManager": "yarn@4.2.2",
-  "gitHead": "9e215baa6a4482f2ca1285f737d2f2217457f25f"
+  "gitHead": "b79c860590f0f2f4be4bc99651e4da85b8d3d8bf"
 }
